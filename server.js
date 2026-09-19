@@ -101,7 +101,7 @@ const openrouterApiKey = (
 const genAI = new GoogleGenerativeAI(geminiApiKey);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash"
+  model: "gemini-3.6-flash"
 });
 
 let openai = null;
@@ -120,8 +120,7 @@ if (openrouterApiKey) {
  */
 
 const GEMINI_MODELS = [
-  "gemini-3.5-flash-lite",
-  "gemini-3.5-flash"
+  "gemini-3.6-flash"
 ];
 
 /*
