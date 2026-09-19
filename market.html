@@ -1,0 +1,900 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Market Price Information | AI Agriculture Advisory</title>
+
+  <link rel="stylesheet" href="modern-ui.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f1f8e9;
+      padding: 30px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #2e7d32;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .controls {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto 20px;
+
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .controls input,
+    .controls select {
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .controls input {
+      width: 280px;
+    }
+
+    .controls select {
+      width: 200px;
+    }
+
+    .controls input:focus,
+    .controls select:focus {
+      border-color: #2e7d32;
+    }
+
+    .refresh-btn {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #2e7d32;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .refresh-btn:hover {
+      background: #1b5e20;
+    }
+
+    .info-box {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto 20px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      background: #fff8e1;
+      color: #795548;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .table-wrapper {
+      width: 95%;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow-x: auto;
+
+      background: white;
+      border-radius: 12px;
+
+      box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th,
+    td {
+      padding: 13px 15px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: center;
+    }
+
+    th {
+      background-color: #2e7d32;
+      color: white;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f1f8e9;
+    }
+
+    td {
+      color: #333;
+    }
+
+    .crop-name {
+      font-weight: 600;
+      color: #2e7d32;
+    }
+
+    .price {
+      font-weight: 600;
+      color: #2e7d32;
+    }
+
+    .date {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+    }
+
+    .record-count {
+      width: 95%;
+      max-width: 1200px;
+      margin: 12px auto;
+
+      color: #555;
+      font-size: 14px;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back a {
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+
+      body {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .controls {
+        width: 100%;
+      }
+
+      .controls input,
+      .controls select {
+        width: 100%;
+      }
+
+      .refresh-btn {
+        width: 100%;
+      }
+
+      .table-wrapper {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- =====================================================
+       PAGE TITLE
+  ====================================================== -->
+
+  <h1>🌾 Market Price Information</h1>
+
+  <p class="subtitle">
+    Current-style mandi price information for major crops
+  </p>
+
+
+  <!-- =====================================================
+       FILTERS
+  ====================================================== -->
+
+  <div class="controls">
+
+    <input
+      type="text"
+      id="searchCrop"
+      placeholder="🔍 Search crop (e.g. Wheat, Rice)"
+    />
+
+    <select id="stateFilter">
+      <option value="">All States</option>
+    </select>
+
+    <button
+      class="refresh-btn"
+      id="refreshBtn"
+      type="button"
+    >
+      🔄 Refresh Data
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       INFORMATION MESSAGE
+  ====================================================== -->
+
+  <div class="info-box">
+    ℹ️ Demo market data is being used currently.
+    Live Government mandi API will be connected later.
+  </div>
+
+
+  <!-- =====================================================
+       RECORD COUNT
+  ====================================================== -->
+
+  <div
+    class="record-count"
+    id="recordCount"
+  >
+    Showing 0 records
+  </div>
+
+
+  <!-- =====================================================
+       PRICE TABLE
+  ====================================================== -->
+
+  <div class="table-wrapper">
+
+    <table id="priceTable">
+
+      <thead>
+
+        <tr>
+          <th>Crop</th>
+          <th>State</th>
+          <th>District</th>
+          <th>Market</th>
+          <th>Min Price</th>
+          <th>Max Price</th>
+          <th>Modal Price</th>
+          <th>Date</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="priceBody">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <!-- =====================================================
+       SOURCE INFORMATION
+  ====================================================== -->
+
+  <div
+    style="
+      width:95%;
+      max-width:1200px;
+      margin:15px auto;
+      font-size:12px;
+      color:#777;
+      text-align:right;
+    "
+  >
+    Demo data for project demonstration
+  </div>
+
+
+  <!-- =====================================================
+       BACK TO DASHBOARD
+  ====================================================== -->
+
+  <div class="back">
+
+    <a href="dashboard.html">
+      ⬅ Back to Dashboard
+    </a>
+
+  </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script>
+
+    // =====================================================
+    // DEMO MARKET DATA
+    // =====================================================
+
+    const marketData = [
+
+      {
+        crop: "Wheat",
+        state: "Punjab",
+        district: "Ludhiana",
+        market: "Ludhiana",
+        minPrice: 2050,
+        maxPrice: 2250,
+        modalPrice: 2150,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Wheat",
+        state: "Uttar Pradesh",
+        district: "Meerut",
+        market: "Meerut",
+        minPrice: 2000,
+        maxPrice: 2200,
+        modalPrice: 2100,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Wheat",
+        state: "Haryana",
+        district: "Karnal",
+        market: "Karnal",
+        minPrice: 2080,
+        maxPrice: 2280,
+        modalPrice: 2180,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Rice",
+        state: "West Bengal",
+        district: "Kolkata",
+        market: "Kolkata",
+        minPrice: 2350,
+        maxPrice: 2650,
+        modalPrice: 2500,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Rice",
+        state: "Uttar Pradesh",
+        district: "Bijnor",
+        market: "Bijnor",
+        minPrice: 2200,
+        maxPrice: 2450,
+        modalPrice: 2325,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Rice",
+        state: "Punjab",
+        district: "Amritsar",
+        market: "Amritsar",
+        minPrice: 2300,
+        maxPrice: 2550,
+        modalPrice: 2425,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Maize",
+        state: "Madhya Pradesh",
+        district: "Indore",
+        market: "Indore",
+        minPrice: 1550,
+        maxPrice: 1850,
+        modalPrice: 1700,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Maize",
+        state: "Bihar",
+        district: "Patna",
+        market: "Patna",
+        minPrice: 1600,
+        maxPrice: 1800,
+        modalPrice: 1700,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Sugarcane",
+        state: "Uttar Pradesh",
+        district: "Meerut",
+        market: "Meerut",
+        minPrice: 300,
+        maxPrice: 340,
+        modalPrice: 320,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Sugarcane",
+        state: "Uttar Pradesh",
+        district: "Muzaffarnagar",
+        market: "Muzaffarnagar",
+        minPrice: 305,
+        maxPrice: 345,
+        modalPrice: 325,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Cotton",
+        state: "Gujarat",
+        district: "Rajkot",
+        market: "Rajkot",
+        minPrice: 6400,
+        maxPrice: 6800,
+        modalPrice: 6600,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Cotton",
+        state: "Maharashtra",
+        district: "Nagpur",
+        market: "Nagpur",
+        minPrice: 6200,
+        maxPrice: 6700,
+        modalPrice: 6450,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Soybean",
+        state: "Maharashtra",
+        district: "Nagpur",
+        market: "Nagpur",
+        minPrice: 3900,
+        maxPrice: 4300,
+        modalPrice: 4100,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Soybean",
+        state: "Madhya Pradesh",
+        district: "Indore",
+        market: "Indore",
+        minPrice: 3800,
+        maxPrice: 4200,
+        modalPrice: 4000,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Onion",
+        state: "Maharashtra",
+        district: "Nashik",
+        market: "Nashik",
+        minPrice: 1000,
+        maxPrice: 1400,
+        modalPrice: 1200,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Onion",
+        state: "Maharashtra",
+        district: "Pune",
+        market: "Pune",
+        minPrice: 1050,
+        maxPrice: 1450,
+        modalPrice: 1250,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Potato",
+        state: "Uttar Pradesh",
+        district: "Agra",
+        market: "Agra",
+        minPrice: 800,
+        maxPrice: 1100,
+        modalPrice: 950,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Potato",
+        state: "Bihar",
+        district: "Patna",
+        market: "Patna",
+        minPrice: 1150,
+        maxPrice: 1400,
+        modalPrice: 1300,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Potato",
+        state: "Bihar",
+        district: "Madhubani",
+        market: "Madhubani",
+        minPrice: 1050,
+        maxPrice: 1350,
+        modalPrice: 1200,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Tomato",
+        state: "Uttar Pradesh",
+        district: "Saharanpur",
+        market: "Saharanpur",
+        minPrice: 1200,
+        maxPrice: 1800,
+        modalPrice: 1500,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Tomato",
+        state: "Maharashtra",
+        district: "Pune",
+        market: "Pune",
+        minPrice: 1300,
+        maxPrice: 1900,
+        modalPrice: 1600,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Mustard",
+        state: "Rajasthan",
+        district: "Jaipur",
+        market: "Jaipur",
+        minPrice: 5000,
+        maxPrice: 5400,
+        modalPrice: 5200,
+        date: "18 Sep 2026"
+      },
+
+      {
+        crop: "Mustard",
+        state: "Haryana",
+        district: "Hisar",
+        market: "Hisar",
+        minPrice: 4950,
+        maxPrice: 5350,
+        modalPrice: 5150,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Groundnut",
+        state: "Gujarat",
+        district: "Junagadh",
+        market: "Junagadh",
+        minPrice: 5200,
+        maxPrice: 5700,
+        modalPrice: 5450,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Chickpea",
+        state: "Madhya Pradesh",
+        district: "Bhopal",
+        market: "Bhopal",
+        minPrice: 5000,
+        maxPrice: 5500,
+        modalPrice: 5250,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Tur Dal",
+        state: "Maharashtra",
+        district: "Akola",
+        market: "Akola",
+        minPrice: 7000,
+        maxPrice: 7600,
+        modalPrice: 7300,
+        date: "18 Sep 2026"
+      },
+
+
+      {
+        crop: "Green Peas",
+        state: "Uttar Pradesh",
+        district: "Lucknow",
+        market: "Lucknow",
+        minPrice: 2800,
+        maxPrice: 3600,
+        modalPrice: 3200,
+        date: "18 Sep 2026"
+      }
+
+    ];
+
+
+    // =====================================================
+    // DOM ELEMENTS
+    // =====================================================
+
+    const priceBody =
+      document.getElementById("priceBody");
+
+    const searchInput =
+      document.getElementById("searchCrop");
+
+    const stateFilter =
+      document.getElementById("stateFilter");
+
+    const refreshBtn =
+      document.getElementById("refreshBtn");
+
+    const recordCount =
+      document.getElementById("recordCount");
+
+
+    // =====================================================
+    // FORMAT PRICE
+    // =====================================================
+
+    function formatPrice(price) {
+
+      return "₹ " +
+        Number(price).toLocaleString("en-IN");
+
+    }
+
+
+    // =====================================================
+    // LOAD STATE FILTER
+    // =====================================================
+
+    function loadStates() {
+
+      const states = [
+        ...new Set(
+          marketData.map(item => item.state)
+        )
+      ];
+
+      states.sort();
+
+      states.forEach(state => {
+
+        const option =
+          document.createElement("option");
+
+        option.value = state;
+
+        option.textContent = state;
+
+        stateFilter.appendChild(option);
+
+      });
+
+    }
+
+
+    // =====================================================
+    // DISPLAY MARKET DATA
+    // =====================================================
+
+    function displayPrices(data) {
+
+      priceBody.innerHTML = "";
+
+      recordCount.textContent =
+        `Showing ${data.length} market records`;
+
+
+      if (data.length === 0) {
+
+        priceBody.innerHTML = `
+          <tr>
+            <td colspan="8" class="empty">
+              ❌ No market data found.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      data.forEach(item => {
+
+        const row =
+          document.createElement("tr");
+
+
+        row.innerHTML = `
+
+          <td class="crop-name">
+            ${item.crop}
+          </td>
+
+          <td>
+            ${item.state}
+          </td>
+
+          <td>
+            ${item.district}
+          </td>
+
+          <td>
+            ${item.market}
+          </td>
+
+          <td class="price">
+            ${formatPrice(item.minPrice)}
+          </td>
+
+          <td class="price">
+            ${formatPrice(item.maxPrice)}
+          </td>
+
+          <td class="price">
+            ${formatPrice(item.modalPrice)}
+          </td>
+
+          <td class="date">
+            ${item.date}
+          </td>
+
+        `;
+
+
+        priceBody.appendChild(row);
+
+      });
+
+    }
+
+
+    // =====================================================
+    // FILTER DATA
+    // =====================================================
+
+    function filterData() {
+
+      const searchValue =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+
+      const selectedState =
+        stateFilter.value
+          .trim()
+          .toLowerCase();
+
+
+      const filteredData =
+        marketData.filter(item => {
+
+          const crop =
+            item.crop.toLowerCase();
+
+          const state =
+            item.state.toLowerCase();
+
+
+          const cropMatch =
+            searchValue === "" ||
+            crop.includes(searchValue);
+
+
+          const stateMatch =
+            selectedState === "" ||
+            state === selectedState;
+
+
+          return cropMatch && stateMatch;
+
+        });
+
+
+      displayPrices(filteredData);
+
+    }
+
+
+    // =====================================================
+    // SEARCH EVENT
+    // =====================================================
+
+    searchInput.addEventListener(
+      "input",
+      filterData
+    );
+
+
+    // =====================================================
+    // STATE EVENT
+    // =====================================================
+
+    stateFilter.addEventListener(
+      "change",
+      filterData
+    );
+
+
+    // =====================================================
+    // REFRESH BUTTON
+    // =====================================================
+
+    refreshBtn.addEventListener(
+      "click",
+      function () {
+
+        searchInput.value = "";
+
+        stateFilter.value = "";
+
+        displayPrices(marketData);
+
+      }
+    );
+
+
+    // =====================================================
+    // INITIALIZE PAGE
+    // =====================================================
+
+    loadStates();
+
+    displayPrices(marketData);
+
+  </script>
+
+</body>
+
+</html>
+```
+

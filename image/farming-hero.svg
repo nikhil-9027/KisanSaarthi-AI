@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#79c8f2"/><stop offset="1" stop-color="#d9f4ff"/></linearGradient>
+  <linearGradient id="field" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#78b84a"/><stop offset="1" stop-color="#285f2b"/></linearGradient>
+</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+<circle cx="1320" cy="150" r="75" fill="#ffd95a" opacity=".95"/>
+<path d="M0 430 Q280 300 520 430 T1050 410 T1600 420 V900 H0Z" fill="#6ea85b"/>
+<path d="M0 510 Q320 410 620 520 T1160 500 T1600 510 V900 H0Z" fill="url(#field)"/>
+<path d="M0 620 Q380 500 800 640 T1600 610" fill="none" stroke="#8fc65b" stroke-width="28" opacity=".75"/>
+<path d="M0 710 Q430 570 820 720 T1600 690" fill="none" stroke="#a6d76b" stroke-width="24" opacity=".55"/>
+<!-- farmer -->
+<g transform="translate(740 390)">
+  <circle cx="80" cy="55" r="28" fill="#9a5b3a"/>
+  <path d="M48 52 Q80 10 112 52 L106 66 L54 66Z" fill="#6b3e24"/>
+  <path d="M58 82 Q80 68 102 82 L115 210 H45Z" fill="#315d35"/>
+  <path d="M55 105 L10 180" stroke="#8a4f32" stroke-width="18" stroke-linecap="round"/>
+  <path d="M105 105 L150 165" stroke="#8a4f32" stroke-width="18" stroke-linecap="round"/>
+  <path d="M62 205 L45 300 M98 205 L116 300" stroke="#3b2b24" stroke-width="22" stroke-linecap="round"/>
+</g>
+<!-- oxen -->
+<g fill="#5b3827" stroke="#3c2419" stroke-width="7">
+  <path d="M360 565 Q410 500 485 535 L520 635 Q480 690 400 655 L370 620Z"/>
+  <path d="M510 555 Q560 500 635 535 L670 635 Q630 690 550 655 L520 620Z"/>
+</g>
+<g fill="none" stroke="#e9d6a3" stroke-width="10" stroke-linecap="round">
+  <path d="M400 535 Q445 475 490 535"/>
+  <path d="M550 535 Q595 475 640 535"/>
+</g>
+<g fill="#fff3cf">
+  <circle cx="405" cy="565" r="8"/><circle cx="555" cy="565" r="8"/>
+</g>
+<!-- plough -->
+<path d="M455 650 L610 650 L760 760" fill="none" stroke="#6b4428" stroke-width="16"/>
+<path d="M730 735 L790 790" stroke="#6b4428" stroke-width="18"/>
+<!-- crop rows -->
+<g stroke="#b9e37b" stroke-width="8" opacity=".8">
+ <path d="M160 800 L460 650"/><path d="M330 860 L620 700"/><path d="M980 850 L1300 670"/><path d="M1200 900 L1500 730"/>
+</g>
+</svg>

@@ -1,0 +1,1384 @@
+/* =========================================================
+   AI AGRICULTURE ADVISORY - MODERN UI
+   Updated Chat Layout + Responsive Design
+   ========================================================= */
+
+:root {
+  --agri-green: #1f7a36;
+  --agri-green-dark: #145b29;
+  --agri-green-light: #eaf7ed;
+  --agri-lime: #7cb342;
+  --agri-gold: #f4c95d;
+
+  --ink: #17351f;
+  --muted: #617267;
+
+  --surface: #ffffff;
+  --line: #dce8df;
+
+  --shadow: 0 18px 45px rgba(20, 70, 35, 0.13);
+  --shadow-soft: 0 8px 25px rgba(20, 70, 35, 0.10);
+
+  --radius: 22px;
+
+  --photo: url("https://images.pexels.com/photos/18100010/pexels-photo-18100010/free-photo-of-farmer-and-oxes.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=2000");
+}
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif !important;
+
+  color: var(--ink);
+  margin: 0;
+}
+
+button,
+.btn,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button,
+.btn {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease !important;
+}
+
+button:hover,
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(31, 122, 54, 0.2);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: var(--agri-green) !important;
+  box-shadow: 0 0 0 4px rgba(31, 122, 54, 0.1) !important;
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav {
+  background: rgba(20, 91, 41, 0.96) !important;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  min-height: 72px;
+
+  padding: 0 5vw !important;
+
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.14) !important;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+nav h1 {
+  font-size: clamp(19px, 2vw, 25px) !important;
+  letter-spacing: -0.3px;
+}
+
+nav ul {
+  gap: 8px !important;
+  align-items: center;
+}
+
+nav ul li a {
+  display: block;
+
+  padding: 10px 14px;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+nav ul li a:hover {
+  color: #fff !important;
+
+  background: rgba(255, 255, 255, 0.13);
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   HOME HERO
+   ========================================================= */
+
+#home-section {
+  background: #f5faf6;
+}
+
+#home-section .hero {
+  min-height: calc(100vh - 72px);
+
+  height: auto !important;
+
+  padding: clamp(80px, 11vw, 150px) 24px 110px !important;
+
+  position: relative;
+
+  isolation: isolate;
+
+  overflow: hidden;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(8, 38, 17, 0.78) 0%,
+      rgba(8, 38, 17, 0.55) 45%,
+      rgba(8, 38, 17, 0.25) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 30, 12, 0.18),
+      rgba(5, 30, 12, 0.38)
+    ),
+    var(--photo) !important;
+
+  background-size: cover !important;
+
+  background-position: center 48% !important;
+
+  border-radius: 0 !important;
+}
+
+#home-section .hero::after {
+  content: "";
+
+  position: absolute;
+
+  inset: auto 0 0;
+
+  height: 150px;
+
+  background: linear-gradient(
+    transparent,
+    #f5faf6
+  );
+
+  z-index: -1;
+}
+
+#home-section .hero h2 {
+  max-width: 900px;
+
+  font-size: clamp(38px, 5.2vw, 72px) !important;
+
+  line-height: 1.06 !important;
+
+  letter-spacing: -2px;
+
+  margin-bottom: 22px !important;
+
+  text-shadow: 0 5px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+#home-section .hero p {
+  max-width: 760px !important;
+
+  font-size: clamp(16px, 2vw, 21px) !important;
+
+  line-height: 1.7 !important;
+
+  margin-bottom: 32px !important;
+
+  color: rgba(255, 255, 255, 0.95) !important;
+
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+#home-section .btn-group {
+  gap: 12px !important;
+}
+
+#home-section .btn {
+  background: linear-gradient(
+    135deg,
+    #51bd64,
+    #2e8d42
+  ) !important;
+
+  padding: 14px 28px !important;
+
+  border-radius: 999px !important;
+
+  font-weight: 700;
+
+  box-shadow: 0 12px 28px rgba(15, 65, 27, 0.3);
+}
+
+#home-section .hero .photo-credit {
+  position: absolute;
+
+  right: 22px;
+  bottom: 16px;
+
+  z-index: 2;
+
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  background: rgba(0, 0, 0, 0.28);
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+}
+
+/* =========================================================
+   HOME CONTENT
+   ========================================================= */
+
+#home-section .info-section {
+  padding: 90px 24px !important;
+
+  background: #fff !important;
+
+  text-align: center;
+}
+
+#home-section .info-section.bg-light {
+  background: linear-gradient(
+    180deg,
+    #f5fbf6,
+    #edf8ef
+  ) !important;
+}
+
+#home-section .info-section h2 {
+  font-size: clamp(28px, 3.2vw, 42px) !important;
+
+  margin-bottom: 16px !important;
+
+  color: var(--agri-green-dark) !important;
+}
+
+#home-section .info-section p {
+  max-width: 760px !important;
+
+  font-size: 17px !important;
+
+  line-height: 1.8 !important;
+
+  color: #526359 !important;
+}
+
+#home-section .form-group {
+  max-width: 650px !important;
+
+  margin: 28px auto 0 !important;
+
+  padding: 28px !important;
+
+  background: #fff;
+
+  border: 1px solid var(--line);
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow-soft);
+
+  gap: 14px !important;
+}
+
+#home-section .form-group input,
+#home-section .form-group textarea {
+  width: 100% !important;
+
+  padding: 14px 16px !important;
+
+  border: 1px solid #ccdacf !important;
+
+  border-radius: 13px !important;
+
+  font-size: 15px !important;
+
+  box-sizing: border-box;
+}
+
+#home-section .form-group button {
+  width: 100%;
+
+  border-radius: 13px !important;
+
+  padding: 14px !important;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   LOGIN SECTION
+   ========================================================= */
+
+#login-section {
+  min-height: calc(100vh - 72px);
+
+  justify-content: center !important;
+
+  align-items: center !important;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(5, 34, 15, 0.62),
+      rgba(5, 34, 15, 0.24)
+    ),
+    var(--photo) !important;
+
+  background-size: cover !important;
+
+  background-position: center !important;
+
+  padding: 70px 20px !important;
+
+  box-sizing: border-box;
+}
+
+#login-section::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: rgba(8, 42, 19, 0.1);
+
+  pointer-events: none;
+}
+
+#login-section .auth-box {
+  position: relative;
+
+  z-index: 1;
+
+  width: min(470px, 100%) !important;
+
+  padding: 38px !important;
+
+  background: rgba(255, 255, 255, 0.94) !important;
+
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+
+  border-radius: 26px !important;
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.24) !important;
+
+  box-sizing: border-box;
+}
+
+#login-section .auth-box h2 {
+  font-size: 32px !important;
+
+  margin-bottom: 10px !important;
+
+  color: var(--agri-green-dark) !important;
+}
+
+#login-section .auth-box p {
+  line-height: 1.55 !important;
+
+  color: var(--muted) !important;
+}
+
+#login-section form {
+  gap: 14px !important;
+}
+
+#login-section input,
+#login-section select {
+  min-height: 50px !important;
+
+  border: 1px solid #cfddd3 !important;
+
+  border-radius: 13px !important;
+
+  padding: 13px 15px !important;
+
+  box-sizing: border-box;
+}
+
+#login-section form button {
+  min-height: 50px;
+
+  border-radius: 13px !important;
+
+  font-weight: 700;
+
+  background: linear-gradient(
+    135deg,
+    #2e8d42,
+    #1f6d31
+  ) !important;
+}
+
+#login-section .link {
+  margin-top: 18px !important;
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+#dashboard-section {
+  min-height: calc(100vh - 72px);
+
+  background-image:
+    linear-gradient(
+      rgba(240, 248, 241, 0.88),
+      rgba(241, 249, 243, 0.96)
+    ),
+    var(--photo) !important;
+
+  background-size: cover !important;
+
+  background-position: center !important;
+
+  background-attachment: fixed;
+}
+
+#dashboard-section > div:first-child {
+  background: linear-gradient(
+    135deg,
+    #1b6930,
+    #2f8b40
+  ) !important;
+
+  padding: 24px 30px !important;
+
+  font-size: clamp(22px, 3vw, 32px) !important;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+#dashboard-section .dashboard-grid {
+  width: min(1400px, 94%);
+
+  margin: 32px auto 50px !important;
+
+  padding: 0 !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr)) !important;
+
+  gap: 24px !important;
+
+  background: transparent !important;
+}
+
+#dashboard-section .dashboard-card {
+  min-width: 0;
+
+  background: rgba(255, 255, 255, 0.94) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  border-radius: 22px !important;
+
+  padding: 26px !important;
+
+  box-shadow: var(--shadow) !important;
+
+  text-align: left !important;
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease !important;
+}
+
+#dashboard-section .dashboard-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 25px 55px rgba(20, 70, 35, 0.17) !important;
+}
+
+#dashboard-section .dashboard-card h3 {
+  color: var(--agri-green-dark) !important;
+
+  font-size: 21px !important;
+
+  margin-bottom: 10px !important;
+}
+
+#dashboard-section .dashboard-card > p {
+  color: var(--muted) !important;
+
+  line-height: 1.55 !important;
+
+  min-height: 48px;
+}
+
+#dashboard-section .dashboard-card input,
+#dashboard-section .dashboard-card select {
+  width: 100% !important;
+
+  min-height: 46px !important;
+
+  border: 1px solid #cfddd3 !important;
+
+  border-radius: 12px !important;
+
+  padding: 10px 12px !important;
+
+  background: #fff !important;
+
+  box-sizing: border-box;
+}
+
+#dashboard-section .dashboard-card button {
+  min-height: 46px;
+
+  border-radius: 12px !important;
+
+  font-weight: 700;
+
+  width: 100%;
+}
+
+#dashboard-section .result-box {
+  margin-top: 15px !important;
+
+  border: 1px solid #dce8df !important;
+
+  border-radius: 14px !important;
+
+  background: #f5fbf6 !important;
+
+  padding: 15px !important;
+
+  min-height: 90px;
+}
+
+#dashboard-section .dashboard-card[style*="grid-column"] {
+  grid-column: 1 / -1 !important;
+}
+
+#dashboard-section #mandi-result {
+  background: #fff !important;
+}
+
+/* =========================================================
+   CHAT SECTION - MAIN SPA
+   ========================================================= */
+
+#chat-section {
+  min-height: calc(100vh - 72px);
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(124, 179, 66, 0.1),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #f3faf4,
+      #edf7ef
+    ) !important;
+
+  padding: 35px 18px 50px !important;
+
+  box-sizing: border-box;
+}
+
+#chat-section .chat-wrapper {
+  width: min(1000px, 100%) !important;
+
+  margin: 0 auto !important;
+
+  padding: 28px !important;
+
+  background: rgba(255, 255, 255, 0.95) !important;
+
+  border: 1px solid #dce8df;
+
+  border-radius: 26px !important;
+
+  box-shadow: var(--shadow) !important;
+
+  box-sizing: border-box;
+}
+
+#chat-section .chat-wrapper > h2 {
+  font-size: clamp(26px, 3.2vw, 38px) !important;
+
+  margin-bottom: 15px !important;
+
+  text-align: center;
+}
+
+/* =========================================================
+   CHATBOX - FIXED HEIGHT
+   ========================================================= */
+
+#chat-section #chatbox {
+  width: 100% !important;
+
+  /*
+     IMPORTANT:
+     Old height was 500px.
+     This smaller height prevents unnecessary
+     page scrolling.
+  */
+
+  height: 380px !important;
+
+  max-height: 380px !important;
+
+  min-height: 300px !important;
+
+  overflow-y: auto !important;
+
+  overflow-x: hidden !important;
+
+  border: 1px solid #d5e3d8 !important;
+
+  border-radius: 18px !important;
+
+  background: #fbfefb !important;
+
+  padding: 16px !important;
+
+  box-shadow:
+    inset 0 2px 12px rgba(20, 70, 35, 0.04) !important;
+
+  box-sizing: border-box;
+
+  scroll-behavior: smooth;
+}
+
+/* Chat scrollbar */
+
+#chat-section #chatbox::-webkit-scrollbar,
+body:not(:has(nav)):has(#chatbox) #chatbox::-webkit-scrollbar {
+  width: 7px;
+}
+
+#chat-section #chatbox::-webkit-scrollbar-track,
+body:not(:has(nav)):has(#chatbox) #chatbox::-webkit-scrollbar-track {
+  background: #edf5ef;
+  border-radius: 20px;
+}
+
+#chat-section #chatbox::-webkit-scrollbar-thumb,
+body:not(:has(nav)):has(#chatbox) #chatbox::-webkit-scrollbar-thumb {
+  background: #9cbea3;
+  border-radius: 20px;
+}
+
+/* =========================================================
+   CHAT MESSAGES
+   ========================================================= */
+
+#chat-section .user,
+#chat-section .bot {
+  max-width: min(82%, 700px) !important;
+
+  padding: 12px 15px !important;
+
+  border-radius: 15px !important;
+
+  line-height: 1.55 !important;
+
+  box-shadow:
+    0 4px 14px rgba(20, 70, 35, 0.06);
+
+  margin-bottom: 10px;
+}
+
+#chat-section .user {
+  background: #dff2e2 !important;
+
+  border-bottom-right-radius: 5px !important;
+
+  margin-left: auto;
+}
+
+#chat-section .bot {
+  background: #fff !important;
+
+  border: 1px solid #e0e9e2;
+
+  border-bottom-left-radius: 5px !important;
+}
+
+/* =========================================================
+   CHAT INPUT
+   ========================================================= */
+
+#chat-section #inputArea {
+  width: 100% !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center;
+
+  gap: 8px !important;
+
+  margin-top: 12px !important;
+
+  box-sizing: border-box;
+}
+
+#chat-section #userInput {
+  flex: 1 1 auto;
+
+  min-width: 0;
+
+  min-height: 48px !important;
+
+  border: 1px solid #ccdacf !important;
+
+  border-radius: 12px !important;
+
+  padding: 11px 13px !important;
+
+  box-sizing: border-box;
+}
+
+#chat-section #inputArea button {
+  min-height: 48px !important;
+
+  border-radius: 12px !important;
+
+  padding: 10px 17px !important;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   DISEASE DETECTOR
+   ========================================================= */
+
+#chat-section #diseaseSection {
+  margin-top: 22px !important;
+
+  padding: 22px !important;
+
+  border-top: 1px solid #dce8df;
+
+  border-right: 0;
+
+  border-left: 0;
+
+  border-bottom: 0;
+
+  border-radius: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  text-align: center;
+}
+
+#chat-section #diseaseSection h3 {
+  color: var(--agri-green-dark) !important;
+
+  font-size: 21px !important;
+
+  margin-bottom: 7px !important;
+}
+
+#chat-section #diseaseSection p {
+  color: var(--muted);
+
+  font-size: 14px;
+}
+
+#chat-section #diseaseSection input[type="file"] {
+  width: 100%;
+
+  padding: 11px;
+
+  border: 1px dashed #b7ccb9;
+
+  border-radius: 12px;
+
+  background: #fff;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   STANDALONE LOGIN.HTML
+   ========================================================= */
+
+body:has(.container) {
+  min-height: 100vh;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(6, 36, 15, 0.65),
+      rgba(6, 36, 15, 0.25)
+    ),
+    var(--photo) !important;
+
+  background-size: cover !important;
+
+  background-position: center !important;
+
+  background-attachment: fixed;
+}
+
+.container {
+  width: min(470px, calc(100% - 32px)) !important;
+
+  padding: 38px !important;
+
+  border-radius: 26px !important;
+
+  background: rgba(255, 255, 255, 0.94) !important;
+
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.25) !important;
+
+  box-sizing: border-box;
+}
+
+.container h2 {
+  font-size: 32px !important;
+
+  color: var(--agri-green-dark) !important;
+}
+
+.container form {
+  gap: 14px !important;
+}
+
+.container input,
+.container select {
+  min-height: 50px !important;
+
+  padding: 13px 15px !important;
+
+  border: 1px solid #cfddd3 !important;
+
+  border-radius: 13px !important;
+
+  box-sizing: border-box;
+}
+
+.container button {
+  min-height: 50px !important;
+
+  border-radius: 13px !important;
+
+  font-weight: 700;
+
+  background: linear-gradient(
+    135deg,
+    #2e8d42,
+    #1f6d31
+  ) !important;
+}
+
+/* =========================================================
+   STANDALONE DASHBOARD
+   ========================================================= */
+
+body:has(.dashboard) {
+  background-image:
+    linear-gradient(
+      rgba(239, 248, 241, 0.84),
+      rgba(239, 248, 241, 0.94)
+    ),
+    var(--photo) !important;
+
+  background-size: cover !important;
+
+  background-attachment: fixed;
+}
+
+body:has(.dashboard) header {
+  background: linear-gradient(
+    135deg,
+    #1b6930,
+    #2f8b40
+  ) !important;
+
+  padding: 20px 30px !important;
+}
+
+body:has(.dashboard) .dashboard {
+  width: min(1400px, 94%);
+
+  margin: 32px auto !important;
+
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr)) !important;
+
+  gap: 24px !important;
+}
+
+body:has(.dashboard) .card {
+  padding: 26px !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.85);
+
+  border-radius: 22px !important;
+
+  box-shadow: var(--shadow) !important;
+}
+
+body:has(.dashboard) .card h3 {
+  font-size: 21px;
+
+  color: var(--agri-green-dark) !important;
+}
+
+body:has(.dashboard) .card input,
+body:has(.dashboard) .card select {
+  min-height: 46px;
+
+  border-radius: 12px !important;
+}
+
+body:has(.dashboard) .card button {
+  min-height: 46px;
+
+  border-radius: 12px !important;
+}
+
+body:has(.dashboard) .card[style*="grid-column"] {
+  grid-column: 1 / -1 !important;
+}
+
+/* =========================================================
+   STANDALONE CHAT.HTML
+   ========================================================= */
+
+body:not(:has(nav)):has(#chatbox) {
+  min-height: 100vh;
+
+  margin: 0;
+
+  padding: 30px 16px 40px;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(124, 179, 66, 0.12),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f3faf4,
+      #eaf6ed
+    ) !important;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  overflow-x: hidden;
+}
+
+/*
+   Main heading on standalone chat page
+*/
+
+body:not(:has(nav)):has(#chatbox) h1 {
+  margin: 5px auto 18px;
+
+  text-align: center;
+
+  color: var(--agri-green-dark);
+}
+
+/*
+   Language controls
+*/
+
+body:not(:has(nav)):has(#chatbox) .language,
+body:not(:has(nav)):has(#chatbox) .language-toggle {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 18px;
+}
+
+/*
+   IMPORTANT CHATBOX FIX
+
+   Old:
+   height: 520px
+
+   New:
+   360px
+
+   This keeps the chat area compact and
+   allows the complete interface to fit better.
+*/
+
+body:not(:has(nav)):has(#chatbox) #chatbox {
+  width: min(1000px, 100%) !important;
+
+  height: 360px !important;
+
+  min-height: 360px !important;
+
+  max-height: 360px !important;
+
+  overflow-y: auto !important;
+
+  overflow-x: hidden !important;
+
+  padding: 16px !important;
+
+  margin: 0 auto !important;
+
+  border: 1px solid #d5e3d8 !important;
+
+  border-radius: 18px !important;
+
+  background: rgba(255, 255, 255, 0.9) !important;
+
+  box-shadow: var(--shadow-soft) !important;
+
+  box-sizing: border-box;
+}
+
+/*
+   Input area
+*/
+
+body:not(:has(nav)):has(#chatbox) #inputArea {
+  width: min(1000px, 100%) !important;
+
+  margin: 12px auto 0 !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  gap: 8px !important;
+
+  box-sizing: border-box;
+}
+
+body:not(:has(nav)):has(#chatbox) #userInput {
+  flex: 1 1 auto;
+
+  min-width: 0;
+
+  min-height: 48px;
+
+  padding: 11px 13px;
+
+  border: 1px solid #ccdacf;
+
+  border-radius: 12px;
+
+  box-sizing: border-box;
+}
+
+body:not(:has(nav)):has(#chatbox) #inputArea button {
+  min-height: 48px;
+
+  padding: 10px 17px;
+
+  border-radius: 12px;
+
+  white-space: nowrap;
+}
+
+/*
+   Disease detector
+*/
+
+body:not(:has(nav)):has(#chatbox) #diseaseSection {
+  width: min(1000px, 100%);
+
+  margin: 22px auto 0;
+
+  padding: 22px;
+
+  border-top: 1px solid #dce8df;
+
+  background: transparent !important;
+
+  border-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MARKET
+   ========================================================= */
+
+body:has(#priceTable) {
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      rgba(240, 248, 242, 0.93),
+      rgba(240, 248, 242, 0.97)
+    ),
+    var(--photo) center / cover fixed !important;
+}
+
+body:has(#priceTable) h1 {
+  font-size: clamp(28px, 4vw, 44px) !important;
+}
+
+body:has(#priceTable) table {
+  width: min(1100px, 94%) !important;
+
+  box-shadow: var(--shadow);
+
+  border-radius: 18px !important;
+
+  overflow: hidden;
+}
+
+body:has(#priceTable) th {
+  padding: 15px !important;
+
+  background: #1f7a36 !important;
+}
+
+body:has(#priceTable) td {
+  padding: 14px !important;
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  #dashboard-section .dashboard-grid,
+  body:has(.dashboard) .dashboard {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+  nav {
+    min-height: auto;
+
+    padding: 14px 18px !important;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+  nav h1 {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  nav ul {
+    width: 100%;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+  nav ul li a {
+    padding: 8px 11px;
+  }
+
+  #home-section .hero {
+    min-height: calc(100vh - 120px);
+
+    background-position: 58% center !important;
+  }
+
+  #home-section .hero h2 {
+    letter-spacing: -1px;
+  }
+
+  #home-section .hero .photo-credit {
+    right: 10px;
+
+    bottom: 10px;
+  }
+
+  #dashboard-section .dashboard-grid,
+  body:has(.dashboard) .dashboard {
+    grid-template-columns: 1fr !important;
+
+    width: calc(100% - 24px);
+  }
+
+  #dashboard-section .dashboard-card[style*="grid-column"],
+  body:has(.dashboard) .card[style*="grid-column"] {
+    grid-column: auto !important;
+  }
+
+  /* MAIN CHAT MOBILE */
+
+  #chat-section {
+    padding: 20px 10px 30px !important;
+  }
+
+  #chat-section .chat-wrapper {
+    padding: 18px !important;
+
+    border-radius: 20px !important;
+  }
+
+  #chat-section #chatbox {
+    height: 360px !important;
+
+    min-height: 360px !important;
+
+    max-height: 360px !important;
+  }
+
+  #chat-section #inputArea {
+    flex-wrap: wrap;
+  }
+
+  #chat-section #userInput {
+    flex: 1 1 100%;
+  }
+
+  #chat-section #inputArea button {
+    flex: 1 1 calc(50% - 5px);
+  }
+
+  /* STANDALONE CHAT MOBILE */
+
+  body:not(:has(nav)):has(#chatbox) {
+    padding: 20px 10px 30px;
+  }
+
+  body:not(:has(nav)):has(#chatbox) #chatbox {
+    height: 330px !important;
+
+    min-height: 330px !important;
+
+    max-height: 330px !important;
+  }
+
+  body:not(:has(nav)):has(#chatbox) #inputArea {
+    flex-wrap: wrap;
+  }
+
+  body:not(:has(nav)):has(#chatbox) #userInput {
+    flex: 1 1 100%;
+  }
+
+  body:not(:has(nav)):has(#chatbox) #inputArea button {
+    flex: 1 1 calc(50% - 5px);
+  }
+
+  body:not(:has(nav)):has(#chatbox) #diseaseSection {
+    padding: 18px 10px;
+  }
+
+  .container {
+    padding: 28px 22px !important;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+  #home-section .hero {
+    padding: 70px 18px 90px !important;
+  }
+
+  #home-section .hero h2 {
+    font-size: 34px !important;
+  }
+
+  #home-section .hero p {
+    font-size: 15px !important;
+  }
+
+  #home-section .info-section {
+    padding: 60px 18px !important;
+  }
+
+  #login-section .auth-box {
+    padding: 28px 20px !important;
+  }
+
+  #chat-section #inputArea button {
+    flex: 1 1 100%;
+  }
+
+  body:not(:has(nav)):has(#chatbox) #inputArea button {
+    flex: 1 1 100%;
+  }
+
+  body:not(:has(nav)):has(#chatbox) #chatbox {
+    height: 300px !important;
+
+    min-height: 300px !important;
+
+    max-height: 300px !important;
+  }
+}

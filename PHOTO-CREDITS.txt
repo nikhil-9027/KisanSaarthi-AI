@@ -1,0 +1,12 @@
+PHOTO CREDITS
+==============
+
+Hero / dashboard / authentication background:
+"A farmer plows the field with oxen, showcasing traditional agriculture techniques."
+Photographer: Mehmet Turgut Kirkgoz
+Source: Pexels
+Photo page: https://www.pexels.com/photo/farmer-with-oxen-in-field-15275563/
+Direct image used by the CSS:
+https://images.pexels.com/photos/15275563/pexels-photo-15275563.jpeg?auto=compress&cs=tinysrgb&w=2000
+
+The photo page lists the image as a free download. The UI uses the image as a remote background so the browser needs an internet connection to display it.

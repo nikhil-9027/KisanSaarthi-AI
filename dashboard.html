@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>AI Agriculture Advisory - Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.78)),
+        url('https://img.freepik.com/premium-photo/farmers-assessing-crop-growth-lush-green-fields-with-tractor-nearby-sunny-day_906809-28105.jpg')
+        no-repeat center center/cover;
+
+      font-family: "Poppins", Arial, sans-serif;
+
+      margin: 0;
+      padding: 0;
+
+      min-height: 100vh;
+
+      color: #333;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      background: #2e7d32;
+
+      color: white;
+
+      padding: 18px 30px;
+
+      text-align: center;
+
+      font-size: 24px;
+
+      font-weight: 700;
+
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    .dashboard {
+      width: min(1200px, 94%);
+
+      margin: 30px auto;
+
+      padding: 30px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(320px, 1fr));
+
+      gap: 24px;
+
+      flex: 1;
+
+      background: rgba(255, 255, 255, 0.72);
+
+      backdrop-filter: blur(8px);
+
+      border-radius: 22px;
+
+      box-shadow:
+        0 15px 40px rgba(0, 80, 0, 0.12);
+    }
+
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+
+      padding: 24px;
+
+      border-radius: 18px;
+
+      box-shadow:
+        0 8px 25px rgba(0, 100, 0, 0.12);
+
+      text-align: center;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+
+    .card:hover {
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 15px 35px rgba(0, 100, 0, 0.18);
+    }
+
+
+    .card h3 {
+      color: #2e7d32;
+
+      margin-top: 0;
+
+      margin-bottom: 10px;
+
+      font-size: 21px;
+    }
+
+
+    .card p {
+      font-size: 15px;
+
+      line-height: 1.5;
+
+      margin-bottom: 14px;
+    }
+
+
+    /* =========================
+       FORM ELEMENTS
+    ========================= */
+
+    input,
+    select {
+      width: 85%;
+
+      padding: 11px 13px;
+
+      margin: 5px 0;
+
+      border: 1px solid #d4d4d4;
+
+      border-radius: 10px;
+
+      font-size: 14px;
+
+      background: white;
+
+      outline: none;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+
+    input:focus,
+    select:focus {
+      border-color: #2e7d32;
+
+      box-shadow:
+        0 0 0 3px rgba(46, 125, 50, 0.12);
+    }
+
+
+    select:disabled {
+      background: #f1f3f1;
+
+      cursor: not-allowed;
+
+      color: #888;
+    }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    button {
+      background: #2e7d32;
+
+      border: none;
+
+      color: white;
+
+      padding: 11px 18px;
+
+      border-radius: 10px;
+
+      cursor: pointer;
+
+      transition:
+        background 0.25s ease,
+        transform 0.2s ease;
+
+      font-size: 15px;
+
+      margin-top: 10px;
+
+      font-weight: 600;
+    }
+
+
+    button:hover {
+      background: #1b5e20;
+
+      transform: translateY(-2px);
+    }
+
+
+    /* =========================
+       WEATHER FORM
+    ========================= */
+
+    .weather-form {
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 7px;
+
+      margin-top: 15px;
+    }
+
+
+    .weather-form select,
+    .weather-form input,
+    .weather-form button {
+      width: 85%;
+    }
+
+
+    .custom-city-row {
+      width: 85%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      margin-top: 5px;
+
+      font-size: 12px;
+
+      color: #555;
+    }
+
+
+    .custom-city-row input[type="checkbox"] {
+      width: auto;
+
+      margin: 0;
+
+      cursor: pointer;
+    }
+
+
+    .custom-city-row label {
+      cursor: pointer;
+    }
+
+
+    /* =========================
+       WEATHER RESULT
+    ========================= */
+
+    #weather-result {
+      margin-top: 18px;
+
+      background: #eef8ef;
+
+      padding: 16px;
+
+      border-radius: 14px;
+
+      text-align: left;
+
+      font-size: 14px;
+
+      min-height: 80px;
+
+      border: 1px solid #d9ecd9;
+    }
+
+
+    #weather-result h4 {
+      margin-top: 0;
+
+      color: #1b5e20;
+
+      font-size: 18px;
+    }
+
+
+    .weather-main {
+      text-align: center;
+
+      padding: 8px 0;
+    }
+
+
+    .weather-main .temperature {
+      font-size: 38px;
+
+      font-weight: 700;
+
+      color: #2e7d32;
+
+      margin: 0;
+    }
+
+
+    .weather-main .condition {
+      text-transform: capitalize;
+
+      margin-top: 4px;
+    }
+
+
+    .weather-details {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 8px;
+
+      margin-top: 15px;
+    }
+
+
+    .weather-detail {
+      background: white;
+
+      border-radius: 10px;
+
+      padding: 10px;
+
+      text-align: center;
+
+      border: 1px solid #e2eee2;
+    }
+
+
+    .weather-detail strong {
+      display: block;
+
+      font-size: 12px;
+
+      color: #555;
+
+      margin-bottom: 4px;
+    }
+
+
+    .weather-detail span {
+      font-weight: 700;
+
+      color: #1b5e20;
+
+      font-size: 13px;
+    }
+
+
+    /* =========================
+       CITY COUNT
+    ========================= */
+
+    .city-count {
+      width: 85%;
+
+      background: #f4faf4;
+
+      border-radius: 8px;
+
+      padding: 7px 10px;
+
+      font-size: 12px;
+
+      color: #477047;
+
+      text-align: left;
+    }
+
+
+    /* =========================
+       CROP RESULT
+    ========================= */
+
+    #crop-result {
+      margin-top: 18px;
+
+      background: #eef8ef;
+
+      padding: 16px;
+
+      border-radius: 14px;
+
+      text-align: left;
+
+      font-size: 14px;
+
+      min-height: 80px;
+
+      border: 1px solid #d9ecd9;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      text-align: center;
+
+      padding: 15px;
+
+      background: #2e7d32;
+
+      color: white;
+
+      font-size: 14px;
+
+      margin-top: auto;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      header {
+        font-size: 20px;
+
+        padding: 15px;
+      }
+
+
+      .dashboard {
+        width: 94%;
+
+        padding: 18px;
+
+        grid-template-columns: 1fr;
+      }
+
+
+      .card {
+        padding: 20px;
+      }
+
+
+      .weather-details {
+        grid-template-columns: 1fr;
+      }
+
+
+      input,
+      select,
+      .weather-form select,
+      .weather-form input,
+      .weather-form button {
+        width: 95%;
+      }
+
+
+      .city-count {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header>
+    🌿 AI Agriculture Advisory Dashboard
+  </header>
+
+
+  <!-- =========================
+       DASHBOARD
+  ========================= -->
+
+  <div class="dashboard">
+
+
+    <!-- =========================
+         WEATHER INFORMATION
+    ========================= -->
+
+    <div class="card">
+
+      <h3>🌦 Weather Information</h3>
+
+      <p>
+        Select your state and city to get
+        real-time weather information.
+      </p>
+
+
+      <div class="weather-form">
+
+
+        <!-- STATE -->
+
+        <select
+          id="state-select"
+          onchange="populateCities()"
+        >
+
+          <option value="">
+            Select State / UT
+          </option>
+
+        </select>
+
+
+        <!-- CITY -->
+
+        <select
+          id="city-select"
+          disabled
+        >
+
+          <option value="">
+            Select City
+          </option>
+
+        </select>
+
+
+        <!-- CITY COUNT -->
+
+        <div
+          id="city-count"
+          class="city-count"
+          style="display:none;"
+        ></div>
+
+
+        <!-- CUSTOM CITY -->
+
+        <div class="custom-city-row">
+
+          <input
+            type="checkbox"
+            id="custom-city-check"
+            onchange="toggleCustomCity()"
+          />
+
+          <label for="custom-city-check">
+            Or enter custom city manually
+          </label>
+
+        </div>
+
+
+        <input
+          type="text"
+          id="city"
+          placeholder="Enter custom city name"
+          style="display:none;"
+        />
+
+
+        <!-- WEATHER BUTTON -->
+
+        <button
+          onclick="getWeather()"
+        >
+          🌤 Get Weather
+        </button>
+
+      </div>
+
+
+      <!-- WEATHER RESULT -->
+
+      <div id="weather-result">
+
+        <p>
+          Select a state and city to view
+          current weather.
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         CROP SUGGESTION
+    ========================= -->
+
+    <div class="card">
+
+      <h3>🌾 Crop Suggestion</h3>
+
+      <p>
+        AI-based recommendations for suitable
+        crops based on soil and climate.
+      </p>
+
+
+      <div class="weather-form">
+
+
+        <select id="soil">
+
+          <option value="">
+            Select Soil Type
+          </option>
+
+          <option value="black">
+            Black Soil
+          </option>
+
+          <option value="red">
+            Red Soil
+          </option>
+
+          <option value="loamy">
+            Loamy Soil
+          </option>
+
+          <option value="sandy">
+            Sandy Soil
+          </option>
+
+          <option value="clayey">
+            Clayey Soil
+          </option>
+
+          <option value="laterite">
+            Laterite Soil
+          </option>
+
+          <option value="alluvial">
+            Alluvial Soil
+          </option>
+
+        </select>
+
+
+        <select id="climate">
+
+          <option value="">
+            Select Climate
+          </option>
+
+          <option value="tropical">
+            Tropical (Hot & Humid)
+          </option>
+
+          <option value="temperate">
+            Temperate (Moderate)
+          </option>
+
+          <option value="arid">
+            Arid / Semi-Arid
+          </option>
+
+          <option value="cold">
+            Cold / Mountainous
+          </option>
+
+          <option value="monsoon">
+            Monsoon (High Rainfall)
+          </option>
+
+        </select>
+
+
+        <button
+          onclick="getCropSuggestion()"
+        >
+          🌱 Get Suggestion
+        </button>
+
+      </div>
+
+
+      <div id="crop-result">
+
+        <p>
+          Select soil and climate to get
+          crop recommendations.
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         AI ADVISORY CHAT
+    ========================= -->
+
+    <div class="card">
+
+      <h3>🤖 AI Advisory Chat</h3>
+
+      <p>
+        Ask farming-related questions and get
+        AI-driven agricultural advice.
+      </p>
+
+
+      <button>
+
+        <a
+          href="chat.html"
+          style="
+            text-decoration:none;
+            color:white;
+          "
+        >
+          💬 Advisory Chat
+        </a>
+
+      </button>
+
+    </div>
+
+
+
+    <!-- =========================
+         MARKET PRICE
+    ========================= -->
+
+    <div class="card">
+
+      <h3>📈 Market Price Info</h3>
+
+      <p>
+        Stay updated with market prices for
+        crops and plan your sales smartly.
+      </p>
+
+
+      <a
+        href="market.html"
+        style="text-decoration:none;"
+      >
+
+        <button>
+          📊 View Market Prices
+        </button>
+
+      </a>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+
+    /*
+    =====================================================
+    INDIAN CITY DATABASE
+    =====================================================
+
+    This dataset contains Indian cities with
+    their corresponding state.
+
+    Example:
+
+    {
+      "name": "Mumbai",
+      "state": "Maharashtra"
+    }
+
+    The complete JSON is loaded from GitHub.
+
+    =====================================================
+    */
+
+    const CITY_DATA_URL =
+      "https://raw.githubusercontent.com/nshntarora/Indian-Cities-JSON/master/cities.json";
+
+
+    let indiaCities = [];
+
+
+
+    /*
+    =====================================================
+    LOAD CITY DATA
+    =====================================================
+    */
+
+    async function loadCityData() {
+
+      const stateSelect =
+        document.getElementById("state-select");
+
+      try {
+
+        stateSelect.innerHTML = `
+          <option value="">
+            Loading States...
+          </option>
+        `;
+
+
+        const response =
+          await fetch(CITY_DATA_URL);
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "Unable to load Indian city database."
+          );
+
+        }
+
+
+        indiaCities =
+          await response.json();
+
+
+        /*
+        Remove invalid entries
+        */
+
+        indiaCities =
+          indiaCities.filter(
+            city =>
+              city &&
+              city.name &&
+              city.state
+          );
+
+
+        /*
+        Create unique states
+        */
+
+        const states =
+          [
+            ...new Set(
+              indiaCities.map(
+                city => city.state
+              )
+            )
+          ]
+          .sort(
+            (a, b) =>
+              a.localeCompare(b)
+          );
+
+
+        /*
+        Reset state dropdown
+        */
+
+        stateSelect.innerHTML = `
+          <option value="">
+            Select State / UT
+          </option>
+        `;
+
+
+        /*
+        Add states
+        */
+
+        states.forEach(state => {
+
+          const option =
+            document.createElement("option");
+
+
+          option.value = state;
+
+          option.textContent = state;
+
+
+          stateSelect.appendChild(option);
+
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "City database error:",
+          error
+        );
+
+
+        stateSelect.innerHTML = `
+          <option value="">
+            Unable to load states
+          </option>
+        `;
+
+
+        document.getElementById(
+          "weather-result"
+        ).innerHTML = `
+
+          <p style="color:#c62828;">
+
+            ❌ Unable to load Indian city data.
+
+          </p>
+
+          <p>
+            Please check your internet connection
+            and refresh the page.
+          </p>
+
+        `;
+
+      }
+
+    }
+
+
+
+    /*
+    =====================================================
+    POPULATE CITIES
+    =====================================================
+    */
+
+    function populateCities() {
+
+      const stateSelect =
+        document.getElementById(
+          "state-select"
+        );
+
+
+      const citySelect =
+        document.getElementById(
+          "city-select"
+        );
+
+
+      const cityCount =
+        document.getElementById(
+          "city-count"
+        );
+
+
+      const resultDiv =
+        document.getElementById(
+          "weather-result"
+        );
+
+
+      const selectedState =
+        stateSelect.value;
+
+
+      /*
+      Reset city dropdown
+      */
+
+      citySelect.innerHTML = `
+        <option value="">
+          Select City
+        </option>
+      `;
+
+
+      citySelect.disabled = true;
+
+
+      cityCount.style.display = "none";
+
+
+      if (!selectedState) {
+
+        resultDiv.innerHTML = `
+          <p>
+            Select a state to see its cities.
+          </p>
+        `;
+
+        return;
+      }
+
+
+      /*
+      Find cities belonging
+      to selected state
+      */
+
+      const cities =
+        indiaCities
+          .filter(
+            city =>
+              city.state === selectedState
+          )
+          .map(
+            city =>
+              city.name.trim()
+          );
+
+
+      /*
+      Remove duplicate cities
+      */
+
+      const uniqueCities =
+        [...new Set(cities)]
+          .sort(
+            (a, b) =>
+              a.localeCompare(b)
+          );
+
+
+      /*
+      No cities
+      */
+
+      if (
+        uniqueCities.length === 0
+      ) {
+
+        citySelect.innerHTML = `
+          <option value="">
+            No cities found
+          </option>
+        `;
+
+
+        resultDiv.innerHTML = `
+          <p style="color:#c62828;">
+            ❌ No city found for
+            ${selectedState}.
+          </p>
+        `;
+
+        return;
+      }
+
+
+      /*
+      Add cities to dropdown
+      */
+
+      uniqueCities.forEach(city => {
+
+        const option =
+          document.createElement("option");
+
+
+        option.value = city;
+
+        option.textContent = city;
+
+
+        citySelect.appendChild(option);
+
+      });
+
+
+      citySelect.disabled = false;
+
+
+      /*
+      Show city count
+      */
+
+      cityCount.style.display = "block";
+
+
+      cityCount.innerHTML = `
+        📍
+        <strong>
+          ${uniqueCities.length}
+        </strong>
+        cities available in
+        <strong>
+          ${selectedState}
+        </strong>
+      `;
+
+
+      resultDiv.innerHTML = `
+        <p>
+          📍
+          <strong>${selectedState}</strong>
+          selected.
+        </p>
+
+        <p>
+          Now select your city and click
+          <strong>Get Weather</strong>.
+        </p>
+      `;
+
+    }
+
+
+
+    /*
+    =====================================================
+    CUSTOM CITY TOGGLE
+    =====================================================
+    */
+
+    function toggleCustomCity() {
+
+      const checkbox =
+        document.getElementById(
+          "custom-city-check"
+        );
+
+
+      const citySelect =
+        document.getElementById(
+          "city-select"
+        );
+
+
+      const stateSelect =
+        document.getElementById(
+          "state-select"
+        );
+
+
+      const cityInput =
+        document.getElementById(
+          "city"
+        );
+
+
+      const cityCount =
+        document.getElementById(
+          "city-count"
+        );
+
+
+      if (checkbox.checked) {
+
+        /*
+        Hide dropdowns
+        */
+
+        stateSelect.style.display =
+          "none";
+
+        citySelect.style.display =
+          "none";
+
+        cityCount.style.display =
+          "none";
+
+
+        /*
+        Show custom input
+        */
+
+        cityInput.style.display =
+          "block";
+
+
+        cityInput.focus();
+
+
+      } else {
+
+        /*
+        Show dropdowns
+        */
+
+        stateSelect.style.display =
+          "block";
+
+        citySelect.style.display =
+          "block";
+
+
+        /*
+        Show count again
+        */
+
+        if (
+          stateSelect.value
+        ) {
+
+          cityCount.style.display =
+            "block";
+
+        }
+
+
+        /*
+        Hide custom input
+        */
+
+        cityInput.style.display =
+          "none";
+
+      }
+
+    }
+
+
+
+    /*
+    =====================================================
+    OPENWEATHER API KEY
+    =====================================================
+
+    IMPORTANT:
+
+    Replace the value below with the SAME
+    OpenWeather API key you already use
+    in your current project.
+
+    Do NOT share your API key publicly.
+    =====================================================
+    */
+
+    const apiKey =
+      "5536254f92d9ef679ff012b87fc32c8a";
+
+
+
+    /*
+    =====================================================
+    GET WEATHER
+    =====================================================
+    */
+
+    async function getWeather() {
+    const state = document.getElementById("state-select").value;
+    const citySelect = document.getElementById("city-select");
+    const customCheck = document.getElementById("custom-city-check");
+    const customCityInput = document.getElementById("city");
+    const result = document.getElementById("weather-result");
+
+    let city = "";
+
+    // If custom city is selected
+    if (customCheck && customCheck.checked) {
+        city = customCityInput.value.trim();
+    } else {
+        city = citySelect.value.trim();
+    }
+
+    // Validation
+    if (!city) {
+        result.innerHTML = `
+            <div style="color:#c62828; font-weight:600;">
+                ❌ Please select or enter a city.
+            </div>
+        `;
+        return;
+    }
+
+    result.innerHTML = `
+        <div style="text-align:center; padding:15px;">
+            🌦️ Getting weather for <strong>${city}</strong>...
+        </div>
+    `;
+
+    try {
+
+        /*
+         * STEP 1:
+         * Convert city name into latitude and longitude
+         */
+        const geoUrl =
+            `https://api.openweathermap.org/geo/1.0/direct` +
+            `?q=${encodeURIComponent(city)},IN` +
+            `&limit=5` +
+            `&appid=${apiKey}`;
+
+        const geoResponse = await fetch(geoUrl);
+
+        if (!geoResponse.ok) {
+            throw new Error(
+                `Geocoding request failed (${geoResponse.status})`
+            );
+        }
+
+        const locations = await geoResponse.json();
+
+        if (!locations || locations.length === 0) {
+            throw new Error(
+                `City "${city}" was not found. Please check the spelling.`
+            );
+        }
+
+        /*
+         * Prefer Indian result.
+         */
+        let location = locations.find(
+            item => item.country === "IN"
+        );
+
+        if (!location) {
+            location = locations[0];
+        }
+
+        const latitude = location.lat;
+        const longitude = location.lon;
+
+        /*
+         * STEP 2:
+         * Get current weather using coordinates
+         */
+        const weatherUrl =
+            `https://api.openweathermap.org/data/2.5/weather` +
+            `?lat=${latitude}` +
+            `&lon=${longitude}` +
+            `&appid=${apiKey}` +
+            `&units=metric`;
+
+        const weatherResponse = await fetch(weatherUrl);
+
+        if (!weatherResponse.ok) {
+            const errorData = await weatherResponse.json().catch(() => ({}));
+
+            throw new Error(
+                errorData.message ||
+                `Weather request failed (${weatherResponse.status})`
+            );
+        }
+
+        const data = await weatherResponse.json();
+
+        /*
+         * Weather information
+         */
+        const temperature = Math.round(data.main.temp);
+        const feelsLike = Math.round(data.main.feels_like);
+        const humidity = data.main.humidity;
+        const pressure = data.main.pressure;
+
+        const windSpeed = data.wind
+            ? (data.wind.speed * 3.6).toFixed(1)
+            : "N/A";
+
+        const visibility = data.visibility
+            ? (data.visibility / 1000).toFixed(1)
+            : "N/A";
+
+        const weatherDescription =
+            data.weather &&
+            data.weather.length > 0
+                ? data.weather[0].description
+                : "Weather information unavailable";
+
+        const weatherMain =
+            data.weather &&
+            data.weather.length > 0
+                ? data.weather[0].main
+                : "";
+
+        const iconCode =
+            data.weather &&
+            data.weather.length > 0
+                ? data.weather[0].icon
+                : "01d";
+
+        const iconUrl =
+            `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+        /*
+         * STEP 3:
+         * Display weather
+         */
+        result.innerHTML = `
+            <div style="
+                background:linear-gradient(135deg,#e8f5e9,#f1f8e9);
+                padding:18px;
+                border-radius:14px;
+                border:1px solid #c8e6c9;
+            ">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:10px;
+                    margin-bottom:10px;
+                ">
+
+                    <div>
+                        <h3 style="
+                            margin:0;
+                            color:#1b5e20;
+                            font-size:20px;
+                        ">
+                            📍 ${escapeHtml(data.name)}
+                        </h3>
+
+                        <p style="
+                            margin:4px 0 0;
+                            color:#555;
+                            font-size:13px;
+                        ">
+                            ${escapeHtml(
+                                state || location.state || "India"
+                            )}, India
+                        </p>
+                    </div>
+
+                    <img
+                        src="${iconUrl}"
+                        alt="${escapeHtml(weatherDescription)}"
+                        style="width:65px;height:65px;"
+                    >
+                </div>
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                    margin:8px 0 15px;
+                ">
+                    <span style="
+                        font-size:38px;
+                        font-weight:700;
+                        color:#2e7d32;
+                    ">
+                        ${temperature}°C
+                    </span>
+
+                    <span style="
+                        text-transform:capitalize;
+                        color:#555;
+                    ">
+                        ${escapeHtml(weatherDescription)}
+                    </span>
+                </div>
+
+                <div style="
+                    display:grid;
+                    grid-template-columns:repeat(2,1fr);
+                    gap:10px;
+                ">
+
+                    <div style="
+                        background:white;
+                        padding:10px;
+                        border-radius:10px;
+                    ">
+                        🌡️ <strong>Feels Like</strong><br>
+                        ${feelsLike}°C
+                    </div>
+
+                    <div style="
+                        background:white;
+                        padding:10px;
+                        border-radius:10px;
+                    ">
+                        💧 <strong>Humidity</strong><br>
+                        ${humidity}%
+                    </div>
+
+                    <div style="
+                        background:white;
+                        padding:10px;
+                        border-radius:10px;
+                    ">
+                        💨 <strong>Wind</strong><br>
+                        ${windSpeed} km/h
+                    </div>
+
+                    <div style="
+                        background:white;
+                        padding:10px;
+                        border-radius:10px;
+                    ">
+                        🌫️ <strong>Visibility</strong><br>
+                        ${visibility} km
+                    </div>
+
+                    <div style="
+                        background:white;
+                        padding:10px;
+                        border-radius:10px;
+                    ">
+                        📊 <strong>Pressure</strong><br>
+                        ${pressure} hPa
+                    </div>
+
+                    <div style="
+                        background:white;
+                        padding:10px;
+                        border-radius:10px;
+                    ">
+                        ☁️ <strong>Condition</strong><br>
+                        ${escapeHtml(weatherMain)}
+                    </div>
+
+                </div>
+
+                <p style="
+                    margin:12px 0 0;
+                    font-size:11px;
+                    color:#777;
+                    text-align:center;
+                ">
+                    Live weather data from OpenWeather
+                </p>
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error("Weather Error:", error);
+
+        result.innerHTML = `
+            <div style="
+                background:#ffebee;
+                color:#b71c1c;
+                padding:15px;
+                border-radius:12px;
+                border:1px solid #ffcdd2;
+            ">
+
+                <strong>❌ Weather could not be loaded</strong>
+
+                <p style="margin:8px 0;">
+                    City:
+                    <strong>${escapeHtml(city)}</strong>
+                </p>
+
+                <p style="
+                    margin:8px 0;
+                    font-size:13px;
+                ">
+                    ${escapeHtml(error.message)}
+                </p>
+
+                <p style="
+                    margin:8px 0 0;
+                    font-size:12px;
+                    color:#777;
+                ">
+                    Please check the city spelling and your OpenWeather API key.
+                </p>
+
+            </div>
+        `;
+    }
+}
+
+
+/*
+ * Security/helper function:
+ * Prevent HTML from being inserted directly into the page.
+ */
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+
+    /*
+    =====================================================
+    CROP RECOMMENDATION DATA
+    =====================================================
+    */
+
+    const cropMatrix = {
+
+
+      black: {
+
+        tropical:
+          "Cotton (Kapas), Soybean, Sugarcane, Sorghum (Jowar) 🌾",
+
+        monsoon:
+          "Paddy (Rice), Cotton, Pulses (Urad/Moong) 🌧",
+
+        arid:
+          "Sorghum (Jowar), Pearl Millet (Bajra), Groundnut 🌵",
+
+        temperate:
+          "Wheat, Chickpea (Gram), Linseed ❄",
+
+        cold:
+          "Barley, Potato, Peas 🏔"
+
+      },
+
+
+      red: {
+
+        tropical:
+          "Groundnut, Ragi (Finger Millet), Cotton, Tobacco 🌾",
+
+        monsoon:
+          "Rice, Maize, Tur (Arhar Pulses) 🌧",
+
+        arid:
+          "Pearl Millet (Bajra), Pulses, Castor Seed 🌵",
+
+        temperate:
+          "Wheat, Potato, Mustard, Linseed ❄",
+
+        cold:
+          "Rye, Potato, Buckwheat 🏔"
+
+      },
+
+
+      loamy: {
+
+        tropical:
+          "Sugarcane, Banana, Turmeric, Maize 🌾",
+
+        monsoon:
+          "Paddy (Rice), Jute, Maize, Soybeans 🌧",
+
+        arid:
+          "Pearl Millet (Bajra), Barley, Mustard 🌵",
+
+        temperate:
+          "Wheat, Barley, Mustard, Green Peas, Potatoes ❄",
+
+        cold:
+          "Oats, Apples, Potato, Garlic 🏔"
+
+      },
+
+
+      sandy: {
+
+        tropical:
+          "Coconut, Cashew, Watermelon, Sweet Potato 🌾",
+
+        monsoon:
+          "Groundnut, Sesame (Til), Pearl Millet 🌧",
+
+        arid:
+          "Pearl Millet (Bajra), Guar (Cluster Bean), Moth Bean, Barley 🌵",
+
+        temperate:
+          "Potato, Carrots, Radish, Turnips ❄",
+
+        cold:
+          "Buckwheat, Barley, Potatoes 🏔"
+
+      },
+
+
+      clayey: {
+
+        tropical:
+          "Sugar beet, Sugarcane, Sorghum 🌾",
+
+        monsoon:
+          "Paddy (Rice), Jute, Black Gram 🌧",
+
+        arid:
+          "Barley, Linseed, Chickpea 🌵",
+
+        temperate:
+          "Wheat, Chickpea (Gram), Lentils (Masoor) ❄",
+
+        cold:
+          "Broccoli, Kale, Cabbage 🏔"
+
+      },
+
+
+      laterite: {
+
+        tropical:
+          "Coconut, Arecanut, Spices (Black Pepper, Cardamom) 🌾",
+
+        monsoon:
+          "Tea, Coffee, Cashew, Rubber 🌧",
+
+        arid:
+          "Millets, Castor, Sesame 🌵",
+
+        temperate:
+          "Sweet Potato, Tapioca, Ginger ❄",
+
+        cold:
+          "Tea, Cardamom, Cinchona 🏔"
+
+      },
+
+
+      alluvial: {
+
+        tropical:
+          "Sugarcane, Maize, Sunflower, Tobacco 🌾",
+
+        monsoon:
+          "Rice (Paddy), Jute, Sesame, Soybeans 🌧",
+
+        arid:
+          "Cotton, Wheat, Mustard (with irrigation) 🌵",
+
+        temperate:
+          "Wheat, Mustard, Barley, Chickpeas, Potatoes ❄",
+
+        cold:
+          "Wheat, Barley, Peas, Turnips 🏔"
+
+      }
+
+    };
+
+
+
+    /*
+    =====================================================
+    CROP SUGGESTION
+    =====================================================
+    */
+
+    function getCropSuggestion() {
+
+      const soil =
+        document.getElementById(
+          "soil"
+        ).value;
+
+
+      const climate =
+        document.getElementById(
+          "climate"
+        ).value;
+
+
+      const resultDiv =
+        document.getElementById(
+          "crop-result"
+        );
+
+
+      /*
+      Validation
+      */
+
+      if (
+        !soil ||
+        !climate
+      ) {
+
+        resultDiv.innerHTML = `
+
+          <p style="color:#c62828;">
+
+            ⚠️ Please select both
+            soil type and climate.
+
+          </p>
+
+        `;
+
+        return;
+
+      }
+
+
+      /*
+      Get recommendation
+      */
+
+      let suggestion = "";
+
+
+      if (
+        cropMatrix[soil] &&
+        cropMatrix[soil][climate]
+      ) {
+
+        suggestion =
+          cropMatrix[soil][climate];
+
+      } else {
+
+        suggestion =
+          "Mixed cropping, organic manure addition, or consult local agricultural office.";
+
+      }
+
+
+      /*
+      Display result
+      */
+
+      resultDiv.innerHTML = `
+
+        <p>
+
+          <strong>
+            🌱 Recommended Crops:
+          </strong>
+
+          ${suggestion}
+
+        </p>
+
+      `;
+
+    }
+
+
+
+    /*
+    =====================================================
+    INITIALIZE DASHBOARD
+    =====================================================
+    */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        loadCityData();
+
+      }
+    );
+
+
+  </script>
+
+
+</body>
+
+</html>
